@@ -8,7 +8,11 @@
     --accent:     var(--paper);
 }
 
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+* {
+    box-sizing: border-box;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
 
 html, body {
     height: 100%;
@@ -34,6 +38,9 @@ body {
     flex-direction: column;
     justify-content: center;
     gap: 2rem;
+    width: 100%;
+    max-width: 960px;
+    margin-inline: auto;
     padding: 2rem 1.5rem;
 }
 
@@ -157,6 +164,9 @@ body {
     flex: 1;
     display: none;
     flex-direction: column;
+    width: 100%;
+    max-width: 1920px;
+    margin-inline: auto;
 }
 
 body.running #setup { display: none; }
