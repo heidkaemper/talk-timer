@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+        <meta name="color-scheme" content="dark">
+        <meta name="theme-color" content="#10131a">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title" content="Timer">
+
+        <title>Talk Timer</title>
+
+        <link rel="manifest" href="./manifest.webmanifest">
+        <link rel="apple-touch-icon" href="./icons/icon-180.png">
+        <link rel="icon" href="./icons/icon-192.png">
+        <link rel="stylesheet" href="./app.css">
+
+        <script type="module" src="./app.js"></script>
+    </head>
+
+    <body>
+        <section id="setup">
+            <h1>How long is the talk?</h1>
+
+            <div class="lengths" id="lengths"></div>
+
+            <div class="fine">
+                <button type="button" id="minus" aria-label="One minute less">–</button>
+                <span id="chosen">30 minutes</span>
+                <button type="button" id="plus" aria-label="One minute more">+</button>
+            </div>
+
+            <div class="switches">
+                <button type="button" role="switch" id="opt-seconds" aria-checked="false">Show seconds</button>
+                <button type="button" role="switch" id="opt-wake" aria-checked="true">Keep screen awake</button>
+            </div>
+
+            <button type="button" id="go">Start</button>
+        </section>
+
+        <section id="timer">
+            <button type="button" id="face" aria-label="Pause or resume">
+                <div id="elapsed">0:00</div>
+                <div id="remaining">30 minutes left</div>
+            </button>
+
+            <div id="ticks" aria-hidden="true"></div>
+
+            <div id="bar">
+                <div id="wake">Keeping screen awake</div>
+
+                <button type="button" id="reset">
+                    <span class="fill"></span>
+                    <span>Hold to end</span>
+                </button>
+            </div>
+        </section>
+    </body>
+</html>
