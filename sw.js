@@ -1,4 +1,4 @@
-const CACHE = 'talk-timer-v2'
+const CACHE = 'talk-timer-v3'
 
 const ASSETS = [
     './',

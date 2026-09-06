@@ -5,6 +5,10 @@ const MAX_MINUTES = 240
 const HOLD_MS = 800
 const TICK_MS = 250
 
+const WARN_SHARE = 0.1
+const WARN_MIN = 1
+const WARN_MAX = 5
+
 const PAPER = 'var(--paper)'
 const WARN = 'var(--warn)'
 const OVER = 'var(--over)'
@@ -48,7 +52,6 @@ let running = false
 let wakeLock = null
 let ticker = null
 let perTick = 1
-let alerted = false
 let lastFace = ''
 let lastMinute = -1
 
@@ -158,23 +161,29 @@ const formatElapsed = (ms) => {
 }
 
 const remainingLabel = (left) => {
-    if (left > 0) {
+    if (left > 1) {
         return `${minuteLabel(left)} left`
     }
 
-    if (left === 0) {
+    if (left === 1) {
         return 'final minute'
+    }
+
+    if (left === 0) {
+        return 'time is up'
     }
 
     return `${minuteLabel(-left)} over`
 }
 
+const warnMinutes = () => Math.min(WARN_MAX, Math.max(WARN_MIN, Math.round(duration * WARN_SHARE)))
+
 const accentFor = (mins) => {
-    if (mins > duration) {
+    if (mins >= duration) {
         return OVER
     }
 
-    if (mins / duration >= 0.8) {
+    if (duration - mins <= warnMinutes()) {
         return WARN
     }
 
@@ -211,13 +220,6 @@ const render = () => {
     document.documentElement.style.setProperty('--accent', accentFor(mins))
 
     paintTicks(mins)
-
-    if (mins < duration || alerted) {
-        return
-    }
-
-    alerted = true
-    navigator.vibrate?.(200)
 }
 
 const start = () => {
@@ -249,7 +251,6 @@ const stop = () => {
     running = false
     startedAt = null
     accumulated = 0
-    alerted = false
 
     body.classList.remove('running', 'paused')
     document.documentElement.style.setProperty('--accent', PAPER)
@@ -287,7 +288,6 @@ $('opt-wake').addEventListener('click', () => {
 
 $('go').addEventListener('click', () => {
     accumulated = 0
-    alerted = false
     lastFace = ''
     lastMinute = -1
 
